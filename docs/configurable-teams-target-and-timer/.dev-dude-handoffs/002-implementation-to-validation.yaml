@@ -1,0 +1,204 @@
+handoff:
+  schema_version: "1.0"
+  workflow_id: "feature"
+  workflow_version: "1.1.0"
+  run_id: "feature-configurable-teams-target-and-timer-a92855af"
+  contract_id: "002-implementation-to-validation"
+  producing_stage: "dev-dude-feature-implementation"
+  receiving_stage: "dev-dude-validation"
+  status: "complete"
+
+objective:
+  statement: "Implement the approved dynamic Teams target and unified timer design with paired executable contract tests."
+  completion_criteria:
+    - id: "CC201"
+      statement: "The implementation plan and clarification evidence exist."
+      status: "met"
+      evidence:
+        - "ART201#Approved scope and ordered tasks"
+        - "ART202#Implementation Clarification"
+    - id: "CC202"
+      statement: "The production skill implements the approved design and has an implementation summary."
+      status: "met"
+      evidence:
+        - "ART203#enable-progress-in-teams"
+        - "ART204#What changed, mapped to the approved design"
+    - id: "CC203"
+      statement: "A paired Test-Implementer result exists and targeted checks pass."
+      status: "met"
+      evidence:
+        - "ART205#Commands and results"
+        - "ART206#SkillContract.Tests.ps1"
+
+verified_facts:
+  - id: "F201"
+    statement: "SKILL.md was rewritten and its metadata version is 1.2.0."
+    evidence:
+      - artifact_id: "ART203"
+        locator: "YAML frontmatter"
+      - artifact_id: "ART204"
+        locator: "Frontmatter description + version bump"
+    verification_status: "verified"
+  - id: "F202"
+    statement: "The implementation removes the hard-coded destination and blocked-only listener model in favor of selectable canonical IDs and one 5-minute schedule."
+    evidence:
+      - artifact_id: "ART204"
+        locator: "What changed, mapped to the approved design"
+    verification_status: "verified"
+  - id: "F203"
+    statement: "The paired static contract suite passes 73 assertions and git diff whitespace validation passes."
+    evidence:
+      - artifact_id: "ART205"
+        locator: "Commands and results"
+    verification_status: "verified"
+
+assumptions:
+  - id: "A201"
+    statement: "The runtime Teams and scheduler tools will continue to expose the schemas documented during resource investigation."
+    reason: "Static skill tests cannot execute deferred MCP and scheduler operations."
+    verification_status: "partially_verified"
+    impact_if_false: "Operational execution may require adapting field names or pagination handling while preserving the approved contract."
+
+constraints:
+  - id: "C201"
+    statement: "Final validation must evaluate actual changed artifacts against the original request and approved design."
+    source: "Validation Workflow - Feature Implementation Verification"
+  - id: "C202"
+    statement: "Static contract checks do not prove live Teams, scheduler, or SQL runtime behavior."
+    source: "ART205#Uncovered risks"
+  - id: "C203"
+    statement: "Only the Feature-Validator may issue the SATISFIED or UNSATISFIED decision."
+    source: "Validation Workflow - Validator Gate"
+
+decisions:
+  - id: "D201"
+    statement: "Advance to validation attempt 1 with semantic flow review and the independent Feature-Validator."
+    rationale: "Implementation, paired test evidence, and targeted commands are complete."
+    based_on:
+      - "F201"
+      - "F202"
+      - "F203"
+      - "C201"
+      - "C203"
+
+rejected_approaches:
+  - id: "R201"
+    approach: "Declare completion based only on the static tests."
+    reason: "The workflow requires semantic integration verification and an independent validator decision."
+    based_on:
+      - "C201"
+      - "C202"
+      - "C203"
+
+artifacts:
+  - id: "ART201"
+    uri_or_path: "docs/configurable-teams-target-and-timer/implementation-plan.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Implementation scope and validation criteria."
+    access: "required"
+  - id: "ART202"
+    uri_or_path: "docs/configurable-teams-target-and-timer/implementation-interview.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Clarification gate evidence."
+    access: "required"
+  - id: "ART203"
+    uri_or_path: "enable-progress-in-teams/SKILL.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Production artifact to validate."
+    access: "required"
+  - id: "ART204"
+    uri_or_path: "docs/configurable-teams-target-and-timer/implementation-summary.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Feature-Implementer evidence."
+    access: "required"
+  - id: "ART205"
+    uri_or_path: "docs/configurable-teams-target-and-timer/test-summary.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Paired Test-Implementer evidence and command results."
+    access: "required"
+  - id: "ART206"
+    uri_or_path: "enable-progress-in-teams/tests/SkillContract.Tests.ps1"
+    media_type: "text/plain"
+    digest: null
+    purpose: "Executable static contract test."
+    access: "required"
+  - id: "ART207"
+    uri_or_path: "docs/configurable-teams-target-and-timer/original-request.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Original feature specification."
+    access: "required"
+  - id: "ART208"
+    uri_or_path: "docs/configurable-teams-target-and-timer/approved-design.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Approved design and policy selections."
+    access: "required"
+  - id: "ART209"
+    uri_or_path: "docs/configurable-teams-target-and-timer/design-options.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Detailed normative design."
+    access: "required"
+  - id: "ART210"
+    uri_or_path: "docs/configurable-teams-target-and-timer/investigation.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Pre-change flow evidence."
+    access: "required"
+
+open_questions: []
+blockers: []
+failures: []
+
+continuation:
+  remaining_criteria: []
+  next_action: "Invoke dev-dude-validation attempt 1."
+
+next_stage:
+  objective: "Semantically verify the rewritten skill and issue a strict SATISFIED or UNSATISFIED decision with targeted remediation if needed."
+  required_inputs:
+    - "F201"
+    - "F202"
+    - "F203"
+    - "ART201"
+    - "ART202"
+    - "ART203"
+    - "ART204"
+    - "ART205"
+    - "ART206"
+    - "ART207"
+    - "ART208"
+    - "ART209"
+    - "ART210"
+  authorized_artifacts:
+    - "ART201"
+    - "ART202"
+    - "ART203"
+    - "ART204"
+    - "ART205"
+    - "ART206"
+    - "ART207"
+    - "ART208"
+    - "ART209"
+    - "ART210"
+  authorized_tools:
+    - "Serena semantic indexing and standard repository tools"
+    - "code-flow-analyzer-copilot"
+    - "feature-validator-copilot"
+    - "PowerShell read-only validation commands"
+  prohibited_dependencies:
+    - "prior conversation history"
+    - "unreferenced artifacts"
+    - "unverified assumptions treated as facts"
+    - "production or test modifications"
+
+validation:
+  result: "pass"
+  validated_by: "root-contract-gate"
+  issues: []

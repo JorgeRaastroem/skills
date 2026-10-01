@@ -1,0 +1,204 @@
+handoff:
+  schema_version: "1.0"
+  workflow_id: "feature"
+  workflow_version: "1.1.0"
+  run_id: "feature-configurable-teams-target-and-timer-a92855af"
+  contract_id: "001-feature-design-to-implementation"
+  producing_stage: "dev-dude-feature-design"
+  receiving_stage: "dev-dude-feature-implementation"
+  status: "complete"
+
+objective:
+  statement: "Investigate and refine a safe design for selectable Teams destinations and one unified recurring routing/operator-message timer, then obtain explicit authorization to implement."
+  completion_criteria:
+    - id: "CC101"
+      statement: "Current behavior, UX, and resource capabilities are documented."
+      status: "met"
+      evidence:
+        - "ART101#investigation"
+        - "ART102#ux review"
+        - "ART103#resource investigation"
+    - id: "CC102"
+      statement: "A refined design with a normative core and selectable UX profiles exists."
+      status: "met"
+      evidence:
+        - "ART104#Normative shared routing and timer core"
+        - "ART104#Selectable UX profiles"
+    - id: "CC103"
+      statement: "The user explicitly authorized implementation and the selected policies are recorded durably."
+      status: "met"
+      evidence:
+        - "ART105#Approved Design"
+
+verified_facts:
+  - id: "F101"
+    statement: "The current skill hard-codes a single Teams destination and uses a blocked-only recurring listener."
+    evidence:
+      - artifact_id: "ART106"
+        locator: "Hard invariants and Phase 3"
+    verification_status: "verified"
+  - id: "F102"
+    statement: "Existing Teams tools, session SQLite, and scheduler capabilities are sufficient; no external dependency is required."
+    evidence:
+      - artifact_id: "ART103"
+        locator: "Discovery findings and critique-and-amend"
+    verification_status: "verified"
+  - id: "F103"
+    statement: "The approved design uses one shared generation-safe routing/timer core and the A+B selection profile."
+    evidence:
+      - artifact_id: "ART105"
+        locator: "Approved Design"
+    verification_status: "verified"
+  - id: "F104"
+    statement: "The user explicitly instructed the workflow to stop planning and start implementing."
+    evidence:
+      - artifact_id: "ART105"
+        locator: "Approval evidence"
+    verification_status: "verified"
+
+assumptions: []
+
+constraints:
+  - id: "C101"
+    statement: "Canonical routing and authorization use exact IDs; slugs and display names are never canonical."
+    source: "ART104#Non-negotiable boundaries"
+  - id: "C102"
+    statement: "Route generations are globally monotonic across enable, disable, re-enable, and retarget."
+    source: "ART104#Generation and root identity"
+  - id: "C103"
+    statement: "Every production implementation result requires paired Test-Implementer evidence before validation."
+    source: "Feature Implementation Workflow Step 4"
+  - id: "C104"
+    statement: "Implementation must remain confined to the skill and directly related feature documentation."
+    source: "ART105#Approved Design"
+
+decisions:
+  - id: "D101"
+    statement: "Implement the normative core with Profile A+B and the policy values recorded in approved-design.md."
+    rationale: "This is the refined recommendation and the user explicitly authorized implementation rather than further planning."
+    based_on:
+      - "F102"
+      - "F103"
+      - "F104"
+      - "C101"
+      - "C102"
+
+rejected_approaches:
+  - id: "R101"
+    approach: "Continue waiting at the design approval gate."
+    reason: "The user explicitly directed the workflow to start implementing."
+    based_on:
+      - "F104"
+  - id: "R102"
+    approach: "Implement Profile C declarative parsing."
+    reason: "It is not selected in the approved design and adds parser/canonicality complexity without a demonstrated requirement."
+    based_on:
+      - "F103"
+
+artifacts:
+  - id: "ART101"
+    uri_or_path: "docs/configurable-teams-target-and-timer/investigation.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Current flow and integration evidence."
+    access: "required"
+  - id: "ART102"
+    uri_or_path: "docs/configurable-teams-target-and-timer/ux-review.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Selection, retarget, status, and accessibility guidance."
+    access: "required"
+  - id: "ART103"
+    uri_or_path: "docs/configurable-teams-target-and-timer/resources-investigation.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Verified Teams, scheduler, persistence, and risk constraints."
+    access: "required"
+  - id: "ART104"
+    uri_or_path: "docs/configurable-teams-target-and-timer/design-options.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Refined normative design."
+    access: "required"
+  - id: "ART105"
+    uri_or_path: "docs/configurable-teams-target-and-timer/approved-design.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Durable approval evidence and selected policy values."
+    access: "required"
+  - id: "ART106"
+    uri_or_path: "enable-progress-in-teams/SKILL.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Production skill to update."
+    access: "required"
+  - id: "ART107"
+    uri_or_path: "C:\\Users\\jrastrom\\.copilot\\skills\\dev-dude\\skills\\dev-dude-feature-implementation\\references\\workflow.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Implementation workflow authority."
+    access: "required"
+  - id: "ART108"
+    uri_or_path: "C:\\Users\\jrastrom\\.copilot\\skills\\dev-dude\\references\\handoff-contract-schema.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Output contract schema."
+    access: "required"
+  - id: "ART109"
+    uri_or_path: "C:\\Users\\jrastrom\\.copilot\\skills\\dev-dude\\references\\validation-rules.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Contract validation rules."
+    access: "required"
+
+open_questions: []
+blockers: []
+failures: []
+
+continuation:
+  remaining_criteria: []
+  next_action: "Invoke dev-dude-feature-implementation at Step 1 and record that no implementation-critical questions remain beyond the approved defaults."
+
+next_stage:
+  objective: "Create the implementation plan, update the Teams progress skill to the approved design, implement paired tests or durable static validation, run targeted checks, and return evidence for final validation."
+  required_inputs:
+    - "F101"
+    - "F102"
+    - "F103"
+    - "F104"
+    - "ART101"
+    - "ART102"
+    - "ART103"
+    - "ART104"
+    - "ART105"
+    - "ART106"
+    - "ART107"
+    - "ART108"
+    - "ART109"
+  authorized_artifacts:
+    - "ART101"
+    - "ART102"
+    - "ART103"
+    - "ART104"
+    - "ART105"
+    - "ART106"
+    - "ART107"
+    - "ART108"
+    - "ART109"
+  authorized_tools:
+    - "Serena semantic indexing and standard repository tools"
+    - "feature-implementer-copilot"
+    - "test-implementer-copilot"
+    - "PowerShell validation commands"
+    - "apply_patch"
+  prohibited_dependencies:
+    - "prior conversation history"
+    - "unreferenced artifacts"
+    - "unverified assumptions treated as facts"
+    - "external package installation"
+    - "final SATISFIED decision"
+
+validation:
+  result: "pass"
+  validated_by: "root-contract-gate"
+  issues: []
