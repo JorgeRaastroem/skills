@@ -1,0 +1,220 @@
+handoff:
+  schema_version: "1.0"
+  workflow_id: "feature"
+  workflow_version: "1.1.0"
+  run_id: "feature-configurable-teams-target-and-timer-a92855af"
+  contract_id: "000-root-to-feature-design"
+  producing_stage: "root-initialization"
+  receiving_stage: "dev-dude-feature-design"
+  status: "complete"
+
+objective:
+  statement: "Prepare a validated, least-context entry contract for designing selectable Teams destinations and a unified recurring routing/listening timer."
+  completion_criteria:
+    - id: "CC001"
+      statement: "The original feature request is captured durably."
+      status: "met"
+      evidence:
+        - "ART001#Original Feature Request"
+    - id: "CC002"
+      statement: "The current skill artifact and feature-design workflow are identified and authorized for investigation."
+      status: "met"
+      evidence:
+        - "ART002#enable-progress-in-teams"
+        - "ART003#Feature Design Workflow"
+    - id: "CC003"
+      statement: "Runtime prerequisites for the design stage are verified."
+      status: "met"
+      evidence:
+        - "ART004#Reconciliation"
+
+verified_facts:
+  - id: "F001"
+    statement: "The current skill hard-codes one Teams team and channel and rejects alternate destinations."
+    evidence:
+      - artifact_id: "ART002"
+        locator: "Hard invariants - Single permitted destination"
+    verification_status: "verified"
+  - id: "F002"
+    statement: "The current skill creates a listener only when the workflow is blocked."
+    evidence:
+      - artifact_id: "ART002"
+        locator: "Phase 3 - Blocked: post blocker and open (or reuse) a listener"
+    verification_status: "verified"
+  - id: "F003"
+    statement: "The current listener is a recurring schedule backed by session SQLite state."
+    evidence:
+      - artifact_id: "ART002"
+        locator: "Durable listener state and Phase 3"
+    verification_status: "verified"
+  - id: "F004"
+    statement: "The requested feature requires selectable destinations, session-scoped persisted selection, target changes, and a unified recurring timer."
+    evidence:
+      - artifact_id: "ART001"
+        locator: "Original Feature Request"
+    verification_status: "verified"
+  - id: "F005"
+    statement: "Serena is the sole available code indexer and has completed repository onboarding."
+    evidence:
+      - artifact_id: "ART004"
+        locator: "Reconciliation"
+    verification_status: "verified"
+
+assumptions:
+  - id: "A001"
+    statement: "The requested 'slug' is a compact session-scoped identifier that maps to the selected team/channel IDs."
+    reason: "The request does not define the slug format, storage table, or whether it embeds IDs."
+    verification_status: "unverified"
+    impact_if_false: "The persistence and target-change design may use the wrong identity model."
+  - id: "A002"
+    statement: "The unified timer should run throughout enablement, not only while blocked."
+    reason: "The request says it must listen while the operator is outside or while waiting for blocking commands."
+    verification_status: "partially_verified"
+    impact_if_false: "The timer lifecycle and cost model would change materially."
+
+constraints:
+  - id: "C001"
+    statement: "The feature-design stage must not modify production code or implement tests."
+    source: "ART003#Exit Contract"
+  - id: "C002"
+    statement: "No design is approved until the user explicitly selects an option."
+    source: "ART003#User Review Gate"
+  - id: "C003"
+    statement: "External recommendations and factual claims must satisfy the trusted-source citation-host invariant."
+    source: "ART005#Citation-Host Invariant"
+  - id: "C004"
+    statement: "The design must preserve fail-closed handling for authoritative session identity and safe Teams content unless an explicitly approved design changes it."
+    source: "ART002#Hard invariants"
+
+decisions:
+  - id: "D001"
+    statement: "Route first to the feature-design investigation stage."
+    rationale: "The request materially changes destination identity, persistence, scheduling, and operator-message semantics and therefore requires explicit option design and approval."
+    based_on:
+      - "F001"
+      - "F002"
+      - "F003"
+      - "F004"
+      - "C001"
+      - "C002"
+
+rejected_approaches:
+  - id: "R001"
+    approach: "Directly edit SKILL.md from the raw request."
+    reason: "Key behavioral choices remain ambiguous and the workflow requires explicit design approval before implementation."
+    based_on:
+      - "F004"
+      - "C001"
+      - "C002"
+
+artifacts:
+  - id: "ART001"
+    uri_or_path: "docs/configurable-teams-target-and-timer/original-request.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Authoritative feature input."
+    access: "required"
+  - id: "ART002"
+    uri_or_path: "enable-progress-in-teams/SKILL.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Current behavior and integration surface for read-only design investigation."
+    access: "required"
+  - id: "ART003"
+    uri_or_path: "C:\\Users\\jrastrom\\.copilot\\skills\\dev-dude\\skills\\dev-dude-feature-design\\references\\workflow.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Authoritative feature-design workflow."
+    access: "required"
+  - id: "ART004"
+    uri_or_path: "docs/configurable-teams-target-and-timer/.dev-dude-run-state.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Durable orchestration state and runtime verification evidence."
+    access: "required"
+  - id: "ART005"
+    uri_or_path: "C:\\Users\\jrastrom\\.copilot\\skills\\dev-dude\\references\\trusted-source-policy.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "External resource research policy."
+    access: "required"
+  - id: "ART006"
+    uri_or_path: "C:\\Users\\jrastrom\\.copilot\\skills\\dev-dude\\references\\handoff-contract-schema.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Typed stage output contract definition."
+    access: "required"
+  - id: "ART007"
+    uri_or_path: "C:\\Users\\jrastrom\\.copilot\\skills\\dev-dude\\references\\validation-rules.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Contract validation rules."
+    access: "required"
+
+open_questions:
+  - id: "Q001"
+    question: "What exact slug format and session persistence model should represent the selected Teams destination?"
+    owner_stage: "dev-dude-feature-design"
+    blocking: false
+  - id: "Q002"
+    question: "What timer cadence, lifetime, and cost/latency trade-off should the design use?"
+    owner_stage: "dev-dude-feature-design"
+    blocking: false
+  - id: "Q003"
+    question: "How should operator messages be authorized, deduplicated, acknowledged, and surfaced while work is active versus blocked?"
+    owner_stage: "dev-dude-feature-design"
+    blocking: false
+
+blockers: []
+failures: []
+
+continuation:
+  remaining_criteria: []
+  next_action: "Invoke dev-dude-feature-design at Step 1 Investigation."
+
+next_stage:
+  objective: "Investigate current routing/listener behavior, research trusted Teams and scheduling capabilities, produce and refine two or three design options, then stop at the explicit user selection gate."
+  required_inputs:
+    - "F001"
+    - "F002"
+    - "F003"
+    - "F004"
+    - "F005"
+    - "ART001"
+    - "ART002"
+    - "ART003"
+    - "ART004"
+    - "ART005"
+    - "ART006"
+    - "ART007"
+  authorized_artifacts:
+    - "ART001"
+    - "ART002"
+    - "ART003"
+    - "ART004"
+    - "ART005"
+    - "ART006"
+    - "ART007"
+  authorized_tools:
+    - "Serena semantic code indexing"
+    - "standard repository glob, search, and view tools"
+    - "code-flow-analyzer-copilot"
+    - "ux-design-reviewer-copilot"
+    - "technical-resource-investigator-copilot"
+    - "investigation-documenter-copilot"
+    - "architecture-reviewer-copilot"
+    - "Microsoft documentation MCP"
+    - "GitHub and official registry lookup"
+    - "WebFetch and WebSearch under the trusted-source policy"
+    - "Mermaid CLI or parser fallback"
+  prohibited_dependencies:
+    - "prior conversation history"
+    - "unreferenced artifacts"
+    - "unverified assumptions treated as facts"
+    - "production code modification"
+    - "test implementation"
+
+validation:
+  result: "pass"
+  validated_by: "root-contract-gate"
+  issues: []

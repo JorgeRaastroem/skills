@@ -1,0 +1,161 @@
+handoff:
+  schema_version: "1.0"
+  workflow_id: "feature"
+  workflow_version: "1.1.0"
+  run_id: "feature-configurable-teams-target-and-timer-a92855af"
+  contract_id: "003-validation-to-remediation"
+  producing_stage: "dev-dude-validation"
+  receiving_stage: "dev-dude-feature-implementation"
+  status: "complete"
+
+objective:
+  statement: "Validate implementation attempt 1 and route precise remediation for material state-safety gaps."
+  completion_criteria:
+    - id: "CC301"
+      statement: "The independent validator issued a decision with evidence."
+      status: "met"
+      evidence:
+        - "ART301#Verification Status"
+    - id: "CC302"
+      statement: "Every failed criterion has a bounded owner and expected remediation output."
+      status: "met"
+      evidence:
+        - "ART301#Required Remediation Tasks"
+
+verified_facts:
+  - id: "F301"
+    statement: "Validation attempt 1 is UNSATISFIED."
+    evidence:
+      - artifact_id: "ART301"
+        locator: "Verification Status"
+    verification_status: "verified"
+  - id: "F302"
+    statement: "Four material gaps remain: composite watermark qualification, durable schedule CAS identity, authorization revision guards, and retarget transition ordering."
+    evidence:
+      - artifact_id: "ART301"
+        locator: "Failed Criteria"
+    verification_status: "verified"
+  - id: "F303"
+    statement: "No user clarification is required."
+    evidence:
+      - artifact_id: "ART301"
+        locator: "Unresolved Questions"
+    verification_status: "verified"
+
+assumptions: []
+
+constraints:
+  - id: "C301"
+    statement: "Production remediation must be followed by paired Test-Implementer remediation before validation reruns."
+    source: "Validation Workflow - Remediation Loop Rules"
+  - id: "C302"
+    statement: "The remediation is limited to the four validator findings and directly coupled documentation/tests."
+    source: "ART301#Required Remediation Tasks"
+
+decisions:
+  - id: "D301"
+    statement: "Dispatch one bounded production remediation and paired test update, then rerun validation as attempt 2."
+    rationale: "The validator supplied precise production and test ownership with no unresolved questions."
+    based_on:
+      - "F301"
+      - "F302"
+      - "F303"
+      - "C301"
+      - "C302"
+
+rejected_approaches:
+  - id: "R301"
+    approach: "Accept the implementation because broad contract tests pass."
+    reason: "The validator found reachable safety ambiguities not covered by those tests."
+    based_on:
+      - "F301"
+      - "F302"
+
+artifacts:
+  - id: "ART301"
+    uri_or_path: "docs/configurable-teams-target-and-timer/verification.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Attempt-1 decision and remediation specification."
+    access: "required"
+  - id: "ART302"
+    uri_or_path: "docs/configurable-teams-target-and-timer/semantic-verification.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Detailed SV-01 through SV-04 evidence."
+    access: "required"
+  - id: "ART303"
+    uri_or_path: "docs/configurable-teams-target-and-timer/design-options.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Normative design sections 3.1, 3.6, 3.7, and 3.8."
+    access: "required"
+  - id: "ART304"
+    uri_or_path: "enable-progress-in-teams/SKILL.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Production artifact to remediate."
+    access: "required"
+  - id: "ART305"
+    uri_or_path: "enable-progress-in-teams/tests/SkillContract.Tests.ps1"
+    media_type: "text/plain"
+    digest: null
+    purpose: "Paired tests to extend after production remediation."
+    access: "required"
+  - id: "ART306"
+    uri_or_path: "docs/configurable-teams-target-and-timer/implementation-summary.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Implementation summary to update with remediation."
+    access: "required"
+  - id: "ART307"
+    uri_or_path: "docs/configurable-teams-target-and-timer/test-summary.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Test summary to update after paired remediation."
+    access: "required"
+
+open_questions: []
+blockers: []
+failures: []
+
+continuation:
+  remaining_criteria: []
+  next_action: "Invoke dev-dude-feature-implementation for attempt-1 remediation."
+
+next_stage:
+  objective: "Correct SV-01 through SV-04 in SKILL.md, update implementation evidence, extend paired tests, run targeted checks, and return current evidence for validation attempt 2."
+  required_inputs:
+    - "F301"
+    - "F302"
+    - "F303"
+    - "ART301"
+    - "ART302"
+    - "ART303"
+    - "ART304"
+    - "ART305"
+    - "ART306"
+    - "ART307"
+  authorized_artifacts:
+    - "ART301"
+    - "ART302"
+    - "ART303"
+    - "ART304"
+    - "ART305"
+    - "ART306"
+    - "ART307"
+  authorized_tools:
+    - "feature-implementer-copilot"
+    - "test-implementer-copilot"
+    - "Serena and standard repository tools"
+    - "PowerShell validation commands"
+  prohibited_dependencies:
+    - "prior conversation history"
+    - "unreferenced artifacts"
+    - "scope expansion beyond SV-01 through SV-04"
+    - "final validation decision"
+
+validation:
+  result: "pass"
+  validated_by: "root-contract-gate"
+  issues: []

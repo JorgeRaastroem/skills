@@ -1,0 +1,169 @@
+handoff:
+  schema_version: "1.0"
+  workflow_id: "feature"
+  workflow_version: "1.1.0"
+  run_id: "feature-configurable-teams-target-and-timer-a92855af"
+  contract_id: "004-remediation-to-validation"
+  producing_stage: "dev-dude-feature-implementation"
+  receiving_stage: "dev-dude-validation"
+  status: "complete"
+
+objective:
+  statement: "Remediate validation-attempt-1 findings SV-01 through SV-04 and extend paired contract tests."
+  completion_criteria:
+    - id: "CC401"
+      statement: "All four production findings are explicitly corrected."
+      status: "met"
+      evidence:
+        - "ART401#Remediation Attempt 1"
+    - id: "CC402"
+      statement: "Paired tests directly assert each remediated semantic and pass."
+      status: "met"
+      evidence:
+        - "ART402#Remediation Attempt 1"
+    - id: "CC403"
+      statement: "Current targeted commands pass."
+      status: "met"
+      evidence:
+        - "ART402#Commands and results"
+
+verified_facts:
+  - id: "F401"
+    statement: "SKILL.md now specifies a composite timestamp/message-ID watermark, revisioned schedule CAS identity, authorization-revision effect guards, and generation-first retarget transitions."
+    evidence:
+      - artifact_id: "ART401"
+        locator: "Remediation Attempt 1"
+    verification_status: "verified"
+  - id: "F402"
+    statement: "The paired static suite now passes 93 assertions and git diff whitespace validation passes."
+    evidence:
+      - artifact_id: "ART402"
+        locator: "Remediation Attempt 1"
+    verification_status: "verified"
+
+assumptions:
+  - id: "A401"
+    statement: "Live Teams, scheduler, and SQL implementations will honor the specified runtime schemas and atomicity primitives."
+    reason: "The repository contains an instructional skill and static contract tests, not executable integrations."
+    verification_status: "partially_verified"
+    impact_if_false: "Runtime field mapping or atomic operations may require adaptation without changing the approved semantics."
+
+constraints:
+  - id: "C401"
+    statement: "Validation attempt 2 must use current post-remediation evidence only."
+    source: "Validation Workflow - Current evidence only"
+  - id: "C402"
+    statement: "The Feature-Validator owns the SATISFIED or UNSATISFIED decision."
+    source: "Validation Workflow - Validator Gate"
+
+decisions:
+  - id: "D401"
+    statement: "Run semantic verification and the final gate as validation attempt 2."
+    rationale: "Production and paired test remediations are complete with current passing command evidence."
+    based_on:
+      - "F401"
+      - "F402"
+      - "C401"
+      - "C402"
+
+rejected_approaches:
+  - id: "R401"
+    approach: "Reuse validation attempt 1 findings without rereading the changed skill."
+    reason: "The production and tests changed, so prior semantic evidence is stale."
+    based_on:
+      - "C401"
+
+artifacts:
+  - id: "ART401"
+    uri_or_path: "docs/configurable-teams-target-and-timer/implementation-summary.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Current implementation and remediation evidence."
+    access: "required"
+  - id: "ART402"
+    uri_or_path: "docs/configurable-teams-target-and-timer/test-summary.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Current paired test remediation and command evidence."
+    access: "required"
+  - id: "ART403"
+    uri_or_path: "enable-progress-in-teams/SKILL.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Current production artifact."
+    access: "required"
+  - id: "ART404"
+    uri_or_path: "enable-progress-in-teams/tests/SkillContract.Tests.ps1"
+    media_type: "text/plain"
+    digest: null
+    purpose: "Current executable contract tests."
+    access: "required"
+  - id: "ART405"
+    uri_or_path: "docs/configurable-teams-target-and-timer/verification.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Attempt-1 findings to verify as closed."
+    access: "required"
+  - id: "ART406"
+    uri_or_path: "docs/configurable-teams-target-and-timer/original-request.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Original feature requirements."
+    access: "required"
+  - id: "ART407"
+    uri_or_path: "docs/configurable-teams-target-and-timer/approved-design.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Approved policies."
+    access: "required"
+  - id: "ART408"
+    uri_or_path: "docs/configurable-teams-target-and-timer/design-options.md"
+    media_type: "text/markdown"
+    digest: null
+    purpose: "Normative design."
+    access: "required"
+
+open_questions: []
+blockers: []
+failures: []
+
+continuation:
+  remaining_criteria: []
+  next_action: "Invoke dev-dude-validation attempt 2."
+
+next_stage:
+  objective: "Reverify the entire feature with current evidence, confirm SV-01 through SV-04 are closed, and issue the attempt-2 gate decision."
+  required_inputs:
+    - "F401"
+    - "F402"
+    - "ART401"
+    - "ART402"
+    - "ART403"
+    - "ART404"
+    - "ART405"
+    - "ART406"
+    - "ART407"
+    - "ART408"
+  authorized_artifacts:
+    - "ART401"
+    - "ART402"
+    - "ART403"
+    - "ART404"
+    - "ART405"
+    - "ART406"
+    - "ART407"
+    - "ART408"
+  authorized_tools:
+    - "code-flow-analyzer-copilot"
+    - "feature-validator-copilot"
+    - "Serena and standard repository tools"
+    - "PowerShell read-only validation commands"
+  prohibited_dependencies:
+    - "prior conversation history"
+    - "stale attempt-1 semantic conclusions treated as current"
+    - "production or test modifications"
+
+validation:
+  result: "pass"
+  validated_by: "root-contract-gate"
+  issues: []
